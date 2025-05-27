@@ -1,0 +1,46 @@
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_gradient"
+    tools:context=".AiPredictionActivity">
+
+    <!-- Tiêu đề -->
+    <TextView
+        android:id="@+id/tvAiTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="AI Prediction"
+        android:textSize="24sp"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:paddingTop="20dp"/>
+    <ImageButton
+        android:id="@+id/btnBackHome1"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:src="@drawable/ic_back_arrow"
+        android:contentDescription="Back to Home"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_margin="16dp"/>
+    <!-- Khu vực hiển thị dự đoán -->
+    <TextView
+        android:id="@+id/tvPredictionResult"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Prediction: N/A"
+        android:textSize="20sp"
+        android:textColor="@android:color/white"
+        app:layout_constraintTop_toBottomOf="@id/tvAiTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="30dp"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

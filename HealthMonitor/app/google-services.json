@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "939581380315",
+    "firebase_url": "https://healthmonitor-a6b4e-default-rtdb.firebaseio.com",
+    "project_id": "healthmonitor-a6b4e",
+    "storage_bucket": "healthmonitor-a6b4e.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:939581380315:android:64db6a40e1daece0709efe",
+        "android_client_info": {
+          "package_name": "com.example.healthmonitor"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBx8ouqLeyNAVL7aM9tPxrFpW3RM0vaSHI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

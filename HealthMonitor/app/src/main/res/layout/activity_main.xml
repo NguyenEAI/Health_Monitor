@@ -1,0 +1,383 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:id="@+id/main"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_gradient"
+    tools:context=".MainActivity">
+
+    <!-- Tiêu đề -->
+
+    <!-- Grid cho các chỉ số -->
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Health HomePage"
+        android:textColor="@android:color/white"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/btnStartMonitoring"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginTop="16dp"
+        app:cardCornerRadius="60dp"
+        app:cardElevation="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvTitle">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="8dp">
+
+            <TextView
+                android:id="@+id/tvStartMonitoring"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Bắt đầu\nkiểm tra"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <!-- Container cho các nút chức năng -->
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardPrediction"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="16dp"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="4dp"
+        app:cardBackgroundColor="#FFFFFF"
+        app:layout_constraintTop_toBottomOf="@id/btnStartMonitoring"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_heart"
+                    android:tint="#FF5252" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="Trạng thái sức khỏe"
+                    android:textColor="#000000"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="#E0E0E0" />
+
+            <TextView
+                android:id="@+id/tvPrediction"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Chưa có dữ liệu"
+                android:textColor="#4CAF50"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <GridLayout
+        android:id="@+id/metricsGrid"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:columnCount="2"
+        android:padding="16dp"
+        android:rowCount="2"
+        app:layout_constraintTop_toBottomOf="@id/cardPrediction"
+        tools:layout_editor_absoluteX="0dp">
+
+        <!-- SpO2 Card -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardSpO2"
+            android:layout_width="0dp"
+            android:layout_height="200dp"
+            android:layout_columnWeight="1"
+            android:layout_margin="8dp"
+            app:cardBackgroundColor="#FFFFFF"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="4dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="16dp">
+
+                <ImageView
+                    android:id="@+id/ivSpO2Icon"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_spo2"
+
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.google.android.material.progressindicator.CircularProgressIndicator
+                    android:id="@+id/progressSpO2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:progress="0"
+                    app:indicatorColor="#FF5252"
+                    app:indicatorSize="120dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:trackColor="#E0E0E0"
+                    app:trackThickness="8dp" />
+
+                <TextView
+                    android:id="@+id/tvSpO2Value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textColor="#000000"
+                    android:textSize="32sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@id/progressSpO2"
+                    app:layout_constraintEnd_toEndOf="@id/progressSpO2"
+                    app:layout_constraintStart_toStartOf="@id/progressSpO2"
+                    app:layout_constraintTop_toTopOf="@id/progressSpO2" />
+
+                <TextView
+                    android:id="@+id/tvSpO2Label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="%SpO2"
+                    android:textColor="#FF5252"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="@id/progressSpO2"
+                    app:layout_constraintStart_toStartOf="@id/progressSpO2"
+                    app:layout_constraintTop_toBottomOf="@id/tvSpO2Value" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Heart Rate Card -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardHeartRate"
+            android:layout_width="0dp"
+            android:layout_height="200dp"
+            android:layout_columnWeight="1"
+            android:layout_margin="8dp"
+            app:cardBackgroundColor="#FFFFFF"
+        app:cardCornerRadius="16dp"
+            app:cardElevation="4dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="16dp">
+
+                <ImageView
+                    android:id="@+id/ivHeartIcon"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_heart"
+        app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.google.android.material.progressindicator.CircularProgressIndicator
+                    android:id="@+id/progressHeartRate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:progress="0"
+                    app:indicatorColor="#FF5252"
+                    app:indicatorSize="120dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:trackColor="#E0E0E0"
+                    app:trackThickness="8dp" />
+
+                <TextView
+                    android:id="@+id/tvHeartRateValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textColor="#000000"
+                    android:textSize="32sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@id/progressHeartRate"
+                    app:layout_constraintEnd_toEndOf="@id/progressHeartRate"
+                    app:layout_constraintStart_toStartOf="@id/progressHeartRate"
+                    app:layout_constraintTop_toTopOf="@id/progressHeartRate" />
+
+                <TextView
+                    android:id="@+id/tvHeartRateLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="BPM"
+                    android:textColor="#FF5252"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="@id/progressHeartRate"
+                    app:layout_constraintStart_toStartOf="@id/progressHeartRate"
+                    app:layout_constraintTop_toBottomOf="@id/tvHeartRateValue" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Temperature Card -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardTemperature"
+            android:layout_width="0dp"
+            android:layout_height="200dp"
+            android:layout_columnWeight="1"
+            android:layout_margin="8dp"
+            app:cardBackgroundColor="#FFFFFF"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="4dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+                android:padding="16dp">
+
+            <ImageView
+                    android:id="@+id/ivTempIcon"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_temp"
+
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.google.android.material.progressindicator.CircularProgressIndicator
+                    android:id="@+id/progressTemperature"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:progress="0"
+                    app:indicatorColor="#FFC107"
+                    app:indicatorSize="120dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:trackColor="#E0E0E0"
+                    app:trackThickness="8dp" />
+
+                <TextView
+                    android:id="@+id/tvTemperatureValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textColor="#000000"
+                    android:textSize="32sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@id/progressTemperature"
+                    app:layout_constraintEnd_toEndOf="@id/progressTemperature"
+                    app:layout_constraintStart_toStartOf="@id/progressTemperature"
+                    app:layout_constraintTop_toTopOf="@id/progressTemperature" />
+
+            <TextView
+                    android:id="@+id/tvTemperatureLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                    android:text="°C"
+                    android:textColor="#FFC107"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="@id/progressTemperature"
+                    app:layout_constraintStart_toStartOf="@id/progressTemperature"
+                    app:layout_constraintTop_toBottomOf="@id/tvTemperatureValue" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+    </GridLayout>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="4dp"
+        app:cardBackgroundColor="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="8dp"
+            android:gravity="center"
+            android:weightSum="3">
+
+            <!-- View History Button -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnHistory"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_margin="8dp"
+                android:text="History"
+                android:textColor="@android:color/white"
+                app:iconTint="@android:color/white"
+                android:backgroundTint="#4CAF50"
+                app:cornerRadius="8dp"/>
+
+            <!-- Statistics Button -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnStatistics"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_margin="8dp"
+                android:text="Statistics"
+                android:textColor="@android:color/white"
+                app:iconTint="@android:color/white"
+                android:backgroundTint="#2196F3"
+                app:cornerRadius="8dp"/>
+
+            <!-- AI Prediction Button -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnAiPrediction"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_margin="8dp"
+                android:text="AI"
+                android:textColor="@android:color/white"
+                app:iconTint="@android:color/white"
+                android:backgroundTint="#FF5252"
+                app:cornerRadius="8dp"/>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
