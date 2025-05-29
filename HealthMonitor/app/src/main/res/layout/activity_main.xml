@@ -9,6 +9,17 @@
     android:background="@drawable/bg_gradient"
     tools:context=".MainActivity">
 
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/topAppBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:title=""
+        android:titleTextColor="@android:color/white"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
     <!-- Tiêu đề -->
 
     <!-- Grid cho các chỉ số -->
@@ -86,7 +97,7 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:src="@drawable/ic_heart"
-                    android:tint="#FF5252" />
+                    app:tint="#FF5256" />
 
                 <TextView
                     android:layout_width="wrap_content"

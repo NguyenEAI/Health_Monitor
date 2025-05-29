@@ -8,8 +8,12 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import com.google.android.material.progressindicator.CircularProgressIndicator
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import java.util.*
+import com.google.android.material.appbar.MaterialToolbar
+import android.view.Menu
+import android.view.MenuItem
 
 class MainActivity : AppCompatActivity() {
     private lateinit var progressSpO2: CircularProgressIndicator
@@ -28,15 +32,44 @@ class MainActivity : AppCompatActivity() {
     private var isMonitoring = false
     private var monitoringStartTime: Long = 0
     private lateinit var healthPredictor: HealthPredictor
+    private lateinit var userId: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        val user = FirebaseAuth.getInstance().currentUser
+        if (user == null) {
+            startActivity(Intent(this, LoginActivity::class.java))
+            finish()
+            return
+        }
+        userId = user.uid
+
+        val toolbar = findViewById<MaterialToolbar>(R.id.topAppBar)
+        setSupportActionBar(toolbar)
+
         initializeViews()
         setupFirebaseDatabase()
         setupClickListeners()
         initializeHealthPredictor()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_main, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_logout -> {
+                FirebaseAuth.getInstance().signOut()
+                startActivity(Intent(this, LoginActivity::class.java))
+                finish()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     private fun initializeViews() {
@@ -129,8 +162,11 @@ class MainActivity : AppCompatActivity() {
                         val prediction = healthPredictor.predict(heartRate, spO2, temp.toFloat())
                         updatePrediction(prediction)
                         
-                        // Lưu dữ liệu vào History
-                        saveToHistory(heartRate, spO2, temp)
+                        // Cập nhật Health cho user hiện tại
+                        updateUserHealth(heartRate, spO2, temp)
+                        
+                        // Lưu dữ liệu vào History của user hiện tại
+                        saveToUserHistory(heartRate, spO2, temp)
                     }
                 } else {
                     Log.d("Firebase", "Không có dữ liệu hoặc không trong trạng thái monitoring")
@@ -156,26 +192,26 @@ class MainActivity : AppCompatActivity() {
         )
     }
 
-    private fun saveToHistory(heartRate: Int, spO2: Int, temperature: Double) {
-        val historyRef = FirebaseDatabase.getInstance().getReference("History")
+    private fun updateUserHealth(heartRate: Int, spO2: Int, temp: Double) {
+        val healthRef = FirebaseDatabase.getInstance().getReference("users").child(userId).child("Health")
+        val healthData = mapOf(
+            "HR" to heartRate,
+            "SpO2" to spO2,
+            "Temp" to temp
+        )
+        healthRef.setValue(healthData)
+    }
+
+    private fun saveToUserHistory(heartRate: Int, spO2: Int, temperature: Double) {
+        val historyRef = FirebaseDatabase.getInstance().getReference("users").child(userId).child("History")
         val currentTime = System.currentTimeMillis()
-        
         val historyData = mapOf(
             "heartRate" to heartRate,
-            "spO2" to spO2,
+            "sp02" to spO2,
             "temperature" to temperature,
             "timestamp" to currentTime
         )
-        
-        Log.d("History", "Đang lưu dữ liệu: $historyData")
-        
         historyRef.push().setValue(historyData)
-            .addOnSuccessListener {
-                Log.d("History", "Lưu dữ liệu thành công")
-            }
-            .addOnFailureListener { e ->
-                Log.e("History", "Lỗi khi lưu dữ liệu", e)
-            }
     }
 
     fun updateSpO2(value: Int) {
