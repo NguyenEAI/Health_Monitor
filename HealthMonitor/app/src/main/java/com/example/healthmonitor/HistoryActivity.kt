@@ -30,9 +30,11 @@ class HistoryActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_history)
 
+        val userId = intent.getStringExtra("USER_ID") ?: return
+
         initializeViews()
         setupRecyclerView()
-        setupFirebaseDatabase()
+        setupFirebaseDatabase(userId)
         setupClickListeners()
         
         loadHistoryForDate(selectedDate)
@@ -56,8 +58,8 @@ class HistoryActivity : AppCompatActivity() {
         }
     }
 
-    private fun setupFirebaseDatabase() {
-        database = FirebaseDatabase.getInstance().getReference("History")
+    private fun setupFirebaseDatabase(userId: String) {
+        database = FirebaseDatabase.getInstance().getReference("users").child(userId).child("History")
     }
 
     private fun setupClickListeners() {

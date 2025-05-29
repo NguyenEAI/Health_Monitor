@@ -35,9 +35,11 @@ class StatisticsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_statistics)
 
+        val userId = intent.getStringExtra("USER_ID") ?: return
+
         initializeViews()
         setupCharts()
-        setupFirebaseDatabase()
+        setupFirebaseDatabase(userId)
         setupClickListeners()
         
         loadDataForDate(selectedDate)
@@ -88,8 +90,8 @@ class StatisticsActivity : AppCompatActivity() {
         }
     }
 
-    private fun setupFirebaseDatabase() {
-        database = FirebaseDatabase.getInstance().getReference("History")
+    private fun setupFirebaseDatabase(userId: String) {
+        database = FirebaseDatabase.getInstance().getReference("users").child(userId).child("History")
     }
 
     private fun setupClickListeners() {

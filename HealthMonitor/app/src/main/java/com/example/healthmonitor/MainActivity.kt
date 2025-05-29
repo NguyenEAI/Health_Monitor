@@ -105,11 +105,13 @@ class MainActivity : AppCompatActivity() {
 
         findViewById<Button>(R.id.btnHistory).setOnClickListener {
             val intent = Intent(this, HistoryActivity::class.java)
+            intent.putExtra("USER_ID", userId)
             startActivity(intent)
         }
 
         findViewById<Button>(R.id.btnStatistics).setOnClickListener {
             val intent = Intent(this, StatisticsActivity::class.java)
+            intent.putExtra("USER_ID", userId)
             startActivity(intent)
         }
 
@@ -139,6 +141,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupFirebaseDatabase() {
+        // Lắng nghe node Health chung
         database = FirebaseDatabase.getInstance().getReference("Health")
         Log.d("Firebase", "Đã kết nối đến Firebase, đường dẫn: Health")
 
@@ -152,27 +155,24 @@ class MainActivity : AppCompatActivity() {
 
                     Log.d("FirebaseData", "HR: $heartRate, SpO2: $spO2, Temp: $temp")
 
+                    // Copy sang node của user
+                    updateUserHealth(heartRate, spO2, temp)
+
                     // Cập nhật UI từ luồng chính
                     runOnUiThread {
                         updateHeartRate(heartRate)
                         updateSpO2(spO2)
                         updateTemperature(temp.toFloat())
-                        
-                        // Thực hiện dự đoán và cập nhật UI
                         val prediction = healthPredictor.predict(heartRate, spO2, temp.toFloat())
                         updatePrediction(prediction)
-                        
-                        // Cập nhật Health cho user hiện tại
-                        updateUserHealth(heartRate, spO2, temp)
-                        
-                        // Lưu dữ liệu vào History của user hiện tại
-                        saveToUserHistory(heartRate, spO2, temp)
                     }
+
+                    // Lưu vào History
+                    saveToUserHistory(heartRate, spO2, temp)
                 } else {
                     Log.d("Firebase", "Không có dữ liệu hoặc không trong trạng thái monitoring")
                 }
             }
-
             override fun onCancelled(error: DatabaseError) {
                 Log.e("FirebaseError", "Failed to read data", error.toException())
             }
@@ -207,7 +207,7 @@ class MainActivity : AppCompatActivity() {
         val currentTime = System.currentTimeMillis()
         val historyData = mapOf(
             "heartRate" to heartRate,
-            "sp02" to spO2,
+            "spO2" to spO2,
             "temperature" to temperature,
             "timestamp" to currentTime
         )
